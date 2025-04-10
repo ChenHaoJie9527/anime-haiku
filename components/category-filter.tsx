@@ -1,23 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Type, PenTool, Clock, Move } from "lucide-react"
+import { categoryColors, categoryIcons } from "@/config"
 
-const categoryIcons = {
-  All: Type,
-  Text: Type,
-  Path: PenTool,
-  Time: Clock,
-  Draggable: Move,
-}
-
-const categoryColors = {
-  All: "text-blue-400",
-  Text: "text-purple-400",
-  Path: "text-green-400",
-  Time: "text-cyan-400",
-  Draggable: "text-pink-400",
-}
 
 interface CategoryFilterProps {
   categories: string[]

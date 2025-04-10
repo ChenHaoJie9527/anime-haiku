@@ -1,23 +1,8 @@
 import Link from "next/link"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Type, PenTool, Clock, Move, Play } from "lucide-react"
+import { categoryColors, categoryIcons } from "@/config"
 
-const categoryIcons = {
-  All: Play,
-  Text: Type,
-  Path: PenTool,
-  Time: Clock,
-  Draggable: Move,
-}
-
-const categoryColors = {
-  All: "text-blue-400",
-  Text: "text-purple-400",
-  Path: "text-green-400",
-  Time: "text-cyan-400",
-  Draggable: "text-pink-400",
-}
 
 interface Project {
   id: number

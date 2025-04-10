@@ -58,5 +58,15 @@
     "daysLeft": 18,
     "category": "Path",
     "imageUrl": "https://picsum.photos/seed/animemorph/800/400"
+  },
+  {
+    "id": 7,
+    "title": "Logo Animation",
+    "description": "Create a smooth logo animation with anime.js.",
+    "goal": 100,
+    "raised": 50,
+    "daysLeft": 22,
+    "category": "Logo",
+    "imageUrl": "https://picsum.photos/seed/animelogos/800/400"
   }
 ]
