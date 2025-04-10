@@ -28,7 +28,7 @@ interface CategoryFilterProps {
 export function CategoryFilter({ categories, selectedCategory, onCategoryChange }: CategoryFilterProps) {
   return (
     <div className="flex flex-wrap justify-center gap-2 mb-6">
-      {["All", ...categories].map((category, index) => {
+      {[...categories].map((category, index) => {
         const Icon = categoryIcons[category as keyof typeof categoryIcons]
         return (
           <Button
