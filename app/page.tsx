@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ProjectCard } from "@/components/project-card";
 import { CategoryFilter } from "@/components/category-filter";
 import { Button } from "@/components/ui/button";
 import projectsData from "@/data/projects.json";
@@ -9,13 +8,15 @@ import { StartProjectOverlay } from "@/components/start-project-overlay";
 import { Category } from "@/config";
 import TextContainer from "@/components/TextContainer";
 
-const categories = Array.from(
-  new Set(projectsData.map((project) => project.category))
-);
+
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("Text");
   const [isStartProjectOpen, setIsStartProjectOpen] = useState(false);
+  const categories = Array.from(
+    new Set(projectsData.map((project) => project.category))
+  );
+
 
   return (
     <div className="space-y-12">

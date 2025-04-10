@@ -1,32 +1,36 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Category, categoryColors, categoryIcons } from "@/config"
-
+import { Button } from "@/components/ui/button";
+import { Category, categoryIcons } from "@/config/index";
+import { cn } from "@/lib/utils";
 
 interface CategoryFilterProps {
-  categories: Category[]
-  selectedCategory: Category
-  onCategoryChange: (category: Category) => void
+  categories: Category[];
+  selectedCategory: Category;
+  onCategoryChange: (category: Category) => void;
 }
 
-export function CategoryFilter({ categories, selectedCategory, onCategoryChange }: CategoryFilterProps) {
+export function CategoryFilter({
+  categories,
+  selectedCategory,
+  onCategoryChange,
+}: CategoryFilterProps) {
   return (
     <div className="flex flex-wrap justify-center gap-2 mb-6">
       {[...categories].map((category, index) => {
-        const Icon = categoryIcons[category as keyof typeof categoryIcons]
+        const Icon = categoryIcons[category as keyof typeof categoryIcons];
         return (
           <Button
             key={category}
             variant={selectedCategory === category ? "default" : "outline"}
-            className="rounded-full px-3 py-1 text-sm"
+            className={cn("rounded-full px-3 py-1 text-sm")}
             onClick={() => onCategoryChange(category)}
           >
-            <Icon className={`w-3 h-3 mr-1 ${categoryColors[category as keyof typeof categoryColors]}`} />
+            {Icon && <Icon />}
             <span>{category}</span>
           </Button>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
