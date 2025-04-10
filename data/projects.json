@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Text Animation",
+    "description": "Animate text characters with various effects and transitions.",
+    "goal": 100,
+    "raised": 75,
+    "daysLeft": 15,
+    "category": "Text",
+    "imageUrl": "https://picsum.photos/seed/animetext/800/400"
+  },
+  {
+    "id": 2,
+    "title": "SVG Path Animation",
+    "description": "Create smooth path animations with precise control over SVG elements.",
+    "goal": 100,
+    "raised": 80,
+    "daysLeft": 20,
+    "category": "Path",
+    "imageUrl": "https://picsum.photos/seed/animepath/800/400"
+  },
+  {
+    "id": 3,
+    "title": "Timeline Sequencing",
+    "description": "Control complex animation sequences with timeline functionality.",
+    "goal": 100,
+    "raised": 60,
+    "daysLeft": 10,
+    "category": "Time",
+    "imageUrl": "https://picsum.photos/seed/animetime/800/400"
+  },
+  {
+    "id": 4,
+    "title": "Draggable Elements",
+    "description": "Create interactive draggable elements with physics and constraints.",
+    "goal": 100,
+    "raised": 90,
+    "daysLeft": 25,
+    "category": "Draggable",
+    "imageUrl": "https://picsum.photos/seed/animedrag/800/400"
+  },
+  {
+    "id": 5,
+    "title": "Staggered Animations",
+    "description": "Apply animations to multiple elements with staggered timing.",
+    "goal": 100,
+    "raised": 45,
+    "daysLeft": 30,
+    "category": "Time",
+    "imageUrl": "https://picsum.photos/seed/animestagger/800/400"
+  },
+  {
+    "id": 6,
+    "title": "Morphing Shapes",
+    "description": "Morph SVG shapes smoothly between different states and forms.",
+    "goal": 100,
+    "raised": 70,
+    "daysLeft": 18,
+    "category": "Path",
+    "imageUrl": "https://picsum.photos/seed/animemorph/800/400"
+  }
+]
