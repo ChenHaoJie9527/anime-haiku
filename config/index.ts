@@ -17,3 +17,5 @@ export const categoryColors = {
   Draggable: "text-pink-400",
   Logo: "text-red-400",
 }
+
+export type Category = "All" | "Text" | "Path" | "Time" | "Draggable" | "Logo"

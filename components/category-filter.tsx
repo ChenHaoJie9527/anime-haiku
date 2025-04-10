@@ -1,13 +1,13 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { categoryColors, categoryIcons } from "@/config"
+import { Category, categoryColors, categoryIcons } from "@/config"
 
 
 interface CategoryFilterProps {
-  categories: string[]
-  selectedCategory: string
-  onCategoryChange: (category: string) => void
+  categories: Category[]
+  selectedCategory: Category
+  onCategoryChange: (category: Category) => void
 }
 
 export function CategoryFilter({ categories, selectedCategory, onCategoryChange }: CategoryFilterProps) {

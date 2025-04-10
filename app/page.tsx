@@ -6,18 +6,16 @@ import { CategoryFilter } from "@/components/category-filter";
 import { Button } from "@/components/ui/button";
 import projectsData from "@/data/projects.json";
 import { StartProjectOverlay } from "@/components/start-project-overlay";
+import { Category } from "@/config";
+import TextContainer from "@/components/TextContainer";
 
 const categories = Array.from(
   new Set(projectsData.map((project) => project.category))
 );
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("Text");
+  const [selectedCategory, setSelectedCategory] = useState<Category>("Text");
   const [isStartProjectOpen, setIsStartProjectOpen] = useState(false);
-
-  const filteredProjects = projectsData.filter(
-    (project) => project.category === selectedCategory
-  );
 
   return (
     <div className="space-y-12">
@@ -36,14 +34,16 @@ export default function Home() {
         </Button>
       </div>
       <CategoryFilter
-        categories={categories}
+        categories={categories as Category[]}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
+        {selectedCategory === "Text" && <TextContainer />}
+        {selectedCategory === "Path" && <div>Path</div>}
+        {selectedCategory === "Time" && <div>Time</div>}
+        {selectedCategory === "Draggable" && <div>Draggable</div>}
+        {selectedCategory === "Logo" && <div>Logo</div>}
       </div>
       <StartProjectOverlay
         isOpen={isStartProjectOpen}

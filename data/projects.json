@@ -50,16 +50,6 @@
     "imageUrl": "https://picsum.photos/seed/animestagger/800/400"
   },
   {
-    "id": 6,
-    "title": "Morphing Shapes",
-    "description": "Morph SVG shapes smoothly between different states and forms.",
-    "goal": 100,
-    "raised": 70,
-    "daysLeft": 18,
-    "category": "Path",
-    "imageUrl": "https://picsum.photos/seed/animemorph/800/400"
-  },
-  {
     "id": 7,
     "title": "Logo Animation",
     "description": "Create a smooth logo animation with anime.js.",
