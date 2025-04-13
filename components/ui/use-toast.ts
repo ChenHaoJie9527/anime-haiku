@@ -1,194 +1,99 @@
-"use client"
+// components/ui/use-toast.ts
+"use client";
 
-// Inspired by react-hot-toast library
-import * as React from "react"
+import { toast as sonnerToast, Toaster, ToasterProps } from 'sonner';
+import { ReactNode } from 'react';
 
-import type {
-  ToastActionElement,
-  ToastProps,
-} from "@/components/ui/toast"
+// 从 ToasterProps 提取 Position 类型
+type Position = NonNullable<ToasterProps['position']>;
 
-const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+// 从 ToasterProps 中推断 ToastOptions 类型
+type SonnerToastOptions = NonNullable<ToasterProps['toastOptions']>;
 
-type ToasterToast = ToastProps & {
-  id: string
-  title?: React.ReactNode
-  description?: React.ReactNode
-  action?: ToastActionElement
+// 扩展的 Toast 类型
+export type ToastVariant = 'default' | 'success' | 'error' | 'warning' | 'loading';
+
+export interface ToastOptions extends SonnerToastOptions {
+  title?: string;
+  description?: ReactNode;
+  variant?: ToastVariant;
+  position?: Position;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
-const actionTypes = {
-  ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
-  DISMISS_TOAST: "DISMISS_TOAST",
-  REMOVE_TOAST: "REMOVE_TOAST",
-} as const
+// 简化的返回 ID 类型
+export type ToastId = string | number;
 
-let count = 0
+// 核心 toast 函数
+function toast(options: ToastOptions): ToastId {
+  const { title, description, variant = 'default', position, action, ...restOptions } = options;
+  
+  const sonnerOptions = {
+    description,
+    position,
+    action: action ? {
+      label: action.label,
+      onClick: action.onClick,
+    } : undefined,
+    ...restOptions,
+  };
 
-function genId() {
-  count = (count + 1) % Number.MAX_SAFE_INTEGER
-  return count.toString()
-}
-
-type ActionType = typeof actionTypes
-
-type Action =
-  | {
-      type: ActionType["ADD_TOAST"]
-      toast: ToasterToast
-    }
-  | {
-      type: ActionType["UPDATE_TOAST"]
-      toast: Partial<ToasterToast>
-    }
-  | {
-      type: ActionType["DISMISS_TOAST"]
-      toastId?: ToasterToast["id"]
-    }
-  | {
-      type: ActionType["REMOVE_TOAST"]
-      toastId?: ToasterToast["id"]
-    }
-
-interface State {
-  toasts: ToasterToast[]
-}
-
-const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
-
-const addToRemoveQueue = (toastId: string) => {
-  if (toastTimeouts.has(toastId)) {
-    return
-  }
-
-  const timeout = setTimeout(() => {
-    toastTimeouts.delete(toastId)
-    dispatch({
-      type: "REMOVE_TOAST",
-      toastId: toastId,
-    })
-  }, TOAST_REMOVE_DELAY)
-
-  toastTimeouts.set(toastId, timeout)
-}
-
-export const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case "ADD_TOAST":
-      return {
-        ...state,
-        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
-      }
-
-    case "UPDATE_TOAST":
-      return {
-        ...state,
-        toasts: state.toasts.map((t) =>
-          t.id === action.toast.id ? { ...t, ...action.toast } : t
-        ),
-      }
-
-    case "DISMISS_TOAST": {
-      const { toastId } = action
-
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
-      if (toastId) {
-        addToRemoveQueue(toastId)
-      } else {
-        state.toasts.forEach((toast) => {
-          addToRemoveQueue(toast.id)
-        })
-      }
-
-      return {
-        ...state,
-        toasts: state.toasts.map((t) =>
-          t.id === toastId || toastId === undefined
-            ? {
-                ...t,
-                open: false,
-              }
-            : t
-        ),
-      }
-    }
-    case "REMOVE_TOAST":
-      if (action.toastId === undefined) {
-        return {
-          ...state,
-          toasts: [],
-        }
-      }
-      return {
-        ...state,
-        toasts: state.toasts.filter((t) => t.id !== action.toastId),
-      }
+  switch (variant) {
+    case 'success':
+      return sonnerToast.success(title || '', sonnerOptions);
+    case 'error':
+      return sonnerToast.error(title || '', sonnerOptions);
+    case 'warning': 
+      return sonnerToast.warning(title || '', sonnerOptions);
+    case 'loading':
+      return sonnerToast.loading(title || '', sonnerOptions);
+    default:
+      return sonnerToast(title || '', sonnerOptions);
   }
 }
 
-const listeners: Array<(state: State) => void> = []
+// 简便方法
+toast.success = (message: string, options?: Omit<ToastOptions, 'title' | 'variant'>) => {
+  return toast({ title: message, variant: 'success', ...options });
+};
 
-let memoryState: State = { toasts: [] }
+toast.error = (message: string, options?: Omit<ToastOptions, 'title' | 'variant'>) => {
+  return toast({ title: message, variant: 'error', ...options });
+};
 
-function dispatch(action: Action) {
-  memoryState = reducer(memoryState, action)
-  listeners.forEach((listener) => {
-    listener(memoryState)
-  })
-}
+toast.warning = (message: string, options?: Omit<ToastOptions, 'title' | 'variant'>) => {
+  return toast({ title: message, variant: 'warning', ...options });
+};
 
-type Toast = Omit<ToasterToast, "id">
+toast.loading = (message: string, options?: Omit<ToastOptions, 'title' | 'variant'>) => {
+  return toast({ title: message, variant: 'loading', ...options });
+};
 
-function toast({ ...props }: Toast) {
-  const id = genId()
+// 添加常用位置的便捷方法
+toast.topCenter = (message: string, options?: Omit<ToastOptions, 'title' | 'position'>) => {
+  return toast({ title: message, position: 'top-center', ...options });
+};
 
-  const update = (props: ToasterToast) =>
-    dispatch({
-      type: "UPDATE_TOAST",
-      toast: { ...props, id },
-    })
-  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+toast.bottomCenter = (message: string, options?: Omit<ToastOptions, 'title' | 'position'>) => {
+  return toast({ title: message, position: 'bottom-center', ...options });
+};
 
-  dispatch({
-    type: "ADD_TOAST",
-    toast: {
-      ...props,
-      id,
-      open: true,
-      onOpenChange: (open) => {
-        if (!open) dismiss()
-      },
-    },
-  })
+// Promise 支持
+toast.promise = sonnerToast.promise;
 
+// 直接暴露 dismiss 方法
+toast.dismiss = sonnerToast.dismiss;
+
+// 自定义 Hook
+export function useToast() {
   return {
-    id: id,
-    dismiss,
-    update,
-  }
-}
-
-function useToast() {
-  const [state, setState] = React.useState<State>(memoryState)
-
-  React.useEffect(() => {
-    listeners.push(setState)
-    return () => {
-      const index = listeners.indexOf(setState)
-      if (index > -1) {
-        listeners.splice(index, 1)
-      }
-    }
-  }, [state])
-
-  return {
-    ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
-  }
+    dismiss: sonnerToast.dismiss,
+    promise: sonnerToast.promise,
+  };
 }
 
-export { useToast, toast }
+export { toast };

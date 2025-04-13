@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
 import Script from "next/script"
+import { Toaster } from "@/components/ui/sonner" 
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -36,7 +37,8 @@ export default function RootLayout({
             </main>
           </div>
         </ThemeProvider>
-        <Script src="https://cdn.jsdelivr.net/npm/animejs@4.0.0/lib/anime.min.js" strategy="afterInteractive" />
+        <Toaster />
+        {/* <Script src="https://cdn.jsdelivr.net/npm/animejs@4.0.0/lib/anime.min.js" strategy="afterInteractive" /> */}
       </body>
     </html>
   )
