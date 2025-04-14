@@ -1,18 +1,19 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Ubuntu, Ubuntu_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
-import Script from "next/script"
 import { Toaster } from "@/components/ui/sonner" 
 
-const geistSans = Geist({
+const ubuntuSans = Ubuntu({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "700"],
 })
-const geistMono = Geist_Mono({
+const ubuntuMono = Ubuntu_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "700"],
 })
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
+      <body className={`${ubuntuSans.variable} ${ubuntuMono.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="min-h-screen bg-background text-foreground">
             <Navigation />
@@ -38,7 +39,6 @@ export default function RootLayout({
           </div>
         </ThemeProvider>
         <Toaster />
-        {/* <Script src="https://cdn.jsdelivr.net/npm/animejs@4.0.0/lib/anime.min.js" strategy="afterInteractive" /> */}
       </body>
     </html>
   )

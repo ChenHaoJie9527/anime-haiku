@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { animate } from "animejs";
 import { cn } from "@/lib/utils";
 import { useToast } from "../ui/use-toast";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import CodeSyntaxHighlighter from "../CodeSyntaxHighlighter";
 interface Text1Props {
   title: string;
   description: string;
@@ -146,22 +145,10 @@ useEffect(() => {
               </div>
             </div>
             <div className="p-3 overflow-auto h-full max-h-[300px]">
-              <pre className="text-sm font-mono">
-                {/* <code>{activeTab === "js" ? jsCode : htmlCode}</code> */}
-
-                <SyntaxHighlighter
-                  language={activeTab === "js" ? "javascript" : "html"}
-                  style={atomDark}
-                  customStyle={{
-                    margin: 0,
-                    borderRadius: 0,
-                    background: "#0f0f0f",
-                  }}
-                  showLineNumbers
-                >
-                  {activeTab === "js" ? jsCode : htmlCode}
-                </SyntaxHighlighter>
-              </pre>
+              <CodeSyntaxHighlighter
+                code={activeTab === "js" ? jsCode : htmlCode}
+                language={activeTab === "js" ? "javascript" : "html"}
+              />
             </div>
           </div>
         )}
